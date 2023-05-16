@@ -83,7 +83,7 @@
   </p>
 
     <p class="btn">
-        <span><input type="button" onclick="getscore()" value="　 計算 　" /></span>
+        <span><input type="button" onclick="getscore()" id="keisanbtn" value="　 計算 　" /></span>
     </p>
   </form>
   <div id="gamebetu"></div>
@@ -146,6 +146,8 @@ for(let i = 0; i<csvArray[0].length;i++){
 var scores = []
 function getscore(){
 
+scores = []
+
 for(let i = 0; i<document.getElementsByTagName('table').length; i++){
   title = document.getElementById('title'+(i+1)).value 
   rank = document.getElementById('rank'+(i+1)).value
@@ -203,6 +205,9 @@ for (let i = 0; i < scores.length; i++) {
 document.getElementById('gamebetu').appendChild(clone);
 
 }
+
+
+document.getElementById('keisanbtn').onclick = null
 
 score = Math.floor(sum/scores.length)
 
