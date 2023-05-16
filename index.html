@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeR</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+  <h1 style="text-align: center; font-size: 2em; margin: 1em;">GeR計算</h1>
+  <div class="box_con">
+    <form class="form">
+    <table class="formTable gameform" id="game1">
+    <tr>
+      <h2 style="text-align: center; margin: 1em;">１つ目</h2>  
+      <tr>
+        <th>ゲームタイトル</th>
+          <td>
+            <select onchange="rankbox(this.value)" name="タイトル" id="title1">
+              <option value="">ゲームタイトルを選択</option>
+              <option value="FORTNITE">フォートナイト/FORTNITE</option>
+              <option value="Apex Legends">エーペックスレジェンズ/Apex Legends</option>
+              <option value="ストリートファイター5">ストリートファイター5</option>
+              <option value="Clash Royal">クラッシュ・ロワイヤル/Clash Royal</option>
+            </select>
+          </td>
+      </tr>
+      <tr>
+        <th>ランク</th>
+        <td>
+          <select name="ランク" id="rank1">
+            <option value="">ランクを選択 ※先にタイトルを選択してください</option>
+          </select>
+        </td>
+    </tr>
+    </table>
+
+    
+    <div class="box_check">
+        <label>
+            
+        </label>
+    </div>
+    <p class="btn">
+        <span><input type="button" onclick="getscore()" value="　 計算 　" /></span>
+    </p>
+  </form>
+  <h1 style="text-align: center; margin: 2em;">合計スコア：<span style="font-size: 2em;" id="score"></span></h1>  
+  <h1 style="text-align: center; margin: 2em;">GeR:<span style="font-size: 2em;" id="ger"></span></h1>  
+</div>
+<script>
+
+function rankbox(n){
+
+  var ul = document.getElementById('rank1')
+  while (ul.firstChild) {
+    ul.removeChild(ul.firstChild);
+  }
+
+
+// CSVファイルを取得
+let csv = new XMLHttpRequest();
+ 
+// CSVファイルへのパス
+csv.open("GET", "titlecsv/"+n+".csv", false);
+ 
+// csvファイル読み込み失敗時のエラー対応
+try {
+  csv.send(null);
+} catch (err) {
+  console.log(err);
+}
+
+// 配列を定義
+var csvArray = [];
+
+// 改行ごとに配列化
+let lines = csv.responseText.split(/\r\n|\n/);
+
+// 1行ごとに処理
+for (let i = 0; i < lines.length; ++i) {
+  let cells = lines[i].split(",");
+  if (cells.length != 1) {
+    csvArray.push(cells);
+  }
+}
+
+console.log(csvArray);
+console.log(csvArray[0].length)
+
+for(let i = 0; i<csvArray[0].length;i++){
+        //option要素を新しく作る
+    const option = document.createElement('option');
+    option.value = csvArray[0][i];
+    option.textContent = csvArray[0][i];
+    document.getElementById('rank1').appendChild(option)
+    console.log(i)
+  }
+
+}
+
+
+function getscore(){
+//     // XMLHttpRequestオブジェクトの作成
+// var request = new XMLHttpRequest();
+
+
+// // URLを開く
+// request.open('GET',"https://script.google.com/macros/s/AKfycbx0mj3HYLyOfFazLG4-t4OrKFKXX4IhRtuz8kUur54Gq_W7LdHEE7jAO8Kmn_sCi-kCUA/exec", true);
+
+// // レスポンスが返ってきた時の処理を記述 
+// request.onload = function () {
+//   // レスポンスが返ってきた時の処理
+// }
+
+// // リクエストをURLに送信
+// request.send();
+
+title = document.getElementById('title1').value 
+rank = document.getElementById('rank1').value
+
+
+// CSVファイルを取得
+let csv = new XMLHttpRequest();
+ 
+// CSVファイルへのパス
+csv.open("GET", "titlecsv/"+title+".csv", false);
+ 
+// csvファイル読み込み失敗時のエラー対応
+try {
+  csv.send(null);
+} catch (err) {
+  console.log(err);
+}
+
+// 配列を定義
+var csvArray = [];
+
+// 改行ごとに配列化
+let lines = csv.responseText.split(/\r\n|\n/);
+
+// 1行ごとに処理
+for (let i = 0; i < lines.length; ++i) {
+  let cells = lines[i].split(",");
+  if (cells.length != 1) {
+    csvArray.push(cells);
+  }
+}
+
+score = Math.floor(Math.pow((csvArray[0].indexOf(rank)+1),1.3)/Math.pow(csvArray[0].length,1.3)*1000)
+
+
+var ger = ""
+
+if(score <= 125){
+  ger="H"
+}else if(score<=250){
+  ger="G"
+}else if(score<=375){
+  ger="F"
+}else if(score<=500){
+  ger="E"
+}else if(score<=625){
+  ger="D"
+}else if(score<=750){
+  ger="C"
+}else if(score<=875){
+  ger="B"
+}else{
+  ger="A"
+}
+
+
+
+console.log(ger)
+
+document.getElementById('ger').innerText = ger
+
+document.getElementById('score').innerText = score
+
+
+
+}
+
+</script>
+</body>
+</html>
