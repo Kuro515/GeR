@@ -100,7 +100,7 @@ function rankbox(n,id){
     ul.removeChild(ul.firstChild);
   }
 
-  //console.log("ID："+id[-1]);
+
 
 // CSVファイルを取得
 let csv = new XMLHttpRequest();
@@ -129,16 +129,12 @@ for (let i = 0; i < lines.length; ++i) {
   }
 }
 
-console.log(csvArray);
-console.log(csvArray[0].length)
 
 for(let i = 0; i<csvArray[0].length;i++){
-        //option要素を新しく作る
     const option = document.createElement('option');
     option.value = csvArray[0][i];
     option.textContent = csvArray[0][i];
     document.getElementById('rank' + r_id).appendChild(option)
-    console.log(i)
   }
 
 }
@@ -183,11 +179,7 @@ score = Math.floor(Math.pow((csvArray[0].indexOf(rank)+1),1.3)/Math.pow(csvArray
 
 scores.push(score);
 
-console.log('scores');
-
 }
-
-console.log(scores)
 
 let sum = 0;
 
@@ -230,10 +222,6 @@ if(score <= 125){
 }else{
   ger="A"
 }
-
-
-
-console.log(ger)
 
 
 
