@@ -206,21 +206,21 @@ score = Math.floor(sum/scores.length)
 var ger = ""
 
 if(score <= 125){
-  ger="H"
-}else if(score<=250){
-  ger="G"
-}else if(score<=375){
-  ger="F"
-}else if(score<=500){
   ger="E"
-}else if(score<=625){
+}else if(score<=250){
   ger="D"
-}else if(score<=750){
+}else if(score<=375){
   ger="C"
-}else if(score<=875){
+}else if(score<=500){
   ger="B"
-}else{
+}else if(score<=625){
   ger="A"
+}else if(score<=750){
+  ger="S"
+}else if(score<=875){
+  ger="SS"
+}else{
+  ger="SSS"
 }
 
 
